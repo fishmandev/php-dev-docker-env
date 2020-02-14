@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+    php:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        image: dev/php-fpm:7.4
+        volumes:
+            - ../:/home/dev/project_name
+
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ../public:/usr/share/nginx/project_name
+            - ./nginx/conf.d:/etc/nginx/conf.d
+        ports:
+            - 80:80
+        depends_on:
+            - php
